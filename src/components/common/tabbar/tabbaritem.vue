@@ -23,17 +23,17 @@ export default {
   },
   computed:{
     isAtive(){
-      return this.$route.path.indexOf(this.path) !== -1
+      return this.$route.path.indexOf(this.path) !== -1;
     },
     activeStyle(){
-      return this.isAtive ? {color:this.activecolor} : {}
+      return this.isAtive ? {color:this.activecolor} : {};
     }
   },
   methods:{
     itemClick(){
       // console.log('1111');
       
-      this.$router.replace(this.path)
+      this.$router.replace(this.path);
     }
   }
 }
