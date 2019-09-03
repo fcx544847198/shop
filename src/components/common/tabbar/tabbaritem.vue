@@ -53,7 +53,7 @@ export default {
   vertical-align: middle;
   margin-bottom: 2px;
 }
-/* .active{
+.active{
   color: red;
-} */
+}
 </style>
