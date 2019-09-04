@@ -93,12 +93,23 @@ export default {
   created() {
     //1.请求多个数据
     gethomemultidata().then(res => {
+      console.log(res);
       this.banners = res.data.banner.list;
       this.recommends = res.data.recommend.list;
-    }),
-    gethomedata('pop',1).then(res =>{
-      console.log(res)
-    })
+    });
+
+    gethomedata("pop");
+    // gethomedata('news')
+    // gethomedata('sell')
+  },
+  methods: {
+    gethomedata(type) {
+      const page = this.goods[type].page + 1;
+      gethomedata(type,page).then(res => {
+        console.log(res);
+        // this.pop.list = res.data.list;
+      });
+    }
   }
 };
 </script>
