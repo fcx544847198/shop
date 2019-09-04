@@ -1026,7 +1026,9 @@ export default {
     NavBar
   },
   created(){
-    new BS('.content')
+    new BS('.content',{
+      
+    })
   }
 };
 </script>
