@@ -3,9 +3,10 @@
     <nav-bar class="home-nav">
       <div slot="center">首页</div>
     </nav-bar>
-    <homeswiper :banners='banners'></homeswiper>
+    <homeswiper :banners="banners"></homeswiper>
     <recommends-view :recommends="recommends"></recommends-view>
     <feature-view></feature-view>
+    <tab-control class="tabcontrol" :titles="['流行','新款','精选']"></tab-control>
 
     <ul>
       <li>1</li>
@@ -28,16 +29,37 @@
       <li>18</li>
       <li>19</li>
       <li>20</li>
+      <li>20</li>
+      <li>20</li>
+      <li>20</li>
+      <li>20</li>
+      <li>20</li>
+      <li>20</li>
+      <li>20</li>
+      <li>20</li>
+      <li>20</li>
+      <li>20</li>
+      <li>20</li>
+      <li>20</li>
+      <li>20</li>
+      <li>20</li>
+      <li>20</li>
+      <li>20</li>
     </ul>
   </div>
 </template>
 
 <script>
 import NavBar from "../../components/common/navbar/NavBar";
+
+import homeswiper from "./childcomps/homeswiper";
+import RecommendsView from "./childcomps/RecommendsView";
+import FeatureView from "./childcomps/FeatureView";
+import TabControl from "../../components/content/tabcontrol/tabcontrol";
+
 import { gethomemultidata } from "../../network/home";
-import homeswiper from './childcomps/homeswiper'
-import RecommendsView from './childcomps/RecommendsView'
-import FeatureView from './childcomps/FeatureView'
+import { gethomedata } from "../../network/home";
+// import { log } from 'util';
 
 export default {
   name: "home",
@@ -45,35 +67,58 @@ export default {
     NavBar,
     homeswiper,
     RecommendsView,
-    FeatureView
+    FeatureView,
+    TabControl
   },
   data() {
     return {
-      banners:[],
-      recommends:[]
-    }
+      banners: [],
+      recommends: [],
+      goods: {
+        pop: {
+          page: 0,
+          list: []
+        },
+        news: {
+          page: 0,
+          list: []
+        },
+        sell: {
+          page: 0,
+          list: []
+        }
+      }
+    };
   },
-  created(){
+  created() {
     //1.请求多个数据
-    gethomemultidata().then(res =>{
+    gethomemultidata().then(res => {
       this.banners = res.data.banner.list;
       this.recommends = res.data.recommend.list;
+    }),
+    gethomedata('pop',1).then(res =>{
+      console.log(res)
     })
   }
 };
 </script>
 
 <style scope>
-#home{
- padding-top: 44px; 
+#home {
+  padding-top: 44px;
 }
 .home-nav {
-  background-color:var(--color-tint);
-  color:white;
+  background-color: var(--color-tint);
+  color: white;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 9;
+}
+.tabcontrol {
+  position: sticky;
+  top: 44px;
+  background-color: white;
 }
 </style>
