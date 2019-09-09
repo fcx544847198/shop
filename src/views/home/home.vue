@@ -93,24 +93,34 @@ export default {
   created() {
     //1.请求多个数据
     gethomemultidata().then(res => {
-      console.log(res);
+      // console.log(res);
       this.banners = res.data.banner.list;
       this.recommends = res.data.recommend.list;
     });
 
-    gethomedata("pop");
-    // gethomedata('news')
-    // gethomedata('sell')
+    // gethomedata("pop");
+
+    gethomedata("pop",1).then(res =>{
+      console.log(res);
+    });
+    gethomedata('new',1).then(res =>{
+      console.log(res);
+    })
+    gethomedata('sell',1).then(res =>{
+      console.log(res);
+
+    })
   },
-  methods: {
-    gethomedata(type) {
-      const page = this.goods[type].page + 1;
-      gethomedata(type,page).then(res => {
-        console.log(res);
-        // this.pop.list = res.data.list;
-      });
-    }
-  }
+  // methods: {
+  //   gethomedata(type,page) {
+  //     // const page = this.goods[type].page + 1;
+  //     gethomedata(type, page).then(res => {
+  //       // this.goods[type].list.push(...res.data.list);
+  //       this.goods[type].page += 1;
+  //       console.log(res);
+  //     });
+  //   }
+  // }
 };
 </script>
 
