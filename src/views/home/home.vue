@@ -3,11 +3,11 @@
     <nav-bar class="home-nav">
       <div slot="center">首页</div>
     </nav-bar>
-    <homeswiper :banners="banners"></homeswiper>
-    <recommends-view :recommends="recommends"></recommends-view>
-    <feature-view></feature-view>
-    <tab-control class="tabcontrol" :titles="['流行','新款','精选']"></tab-control>
-    <goodslist :goods="goods['pop'].list"></goodslist>
+    <homeswiper :banners="banners" />
+    <recommends-view :recommends="recommends" />
+    <feature-view />
+    <tab-control class="tabcontrol" :titles="['流行','新款','精选']" @tabclick="tabclick" />
+    <goodslist :goods="goods[currentType].list"/>
 
     <ul>
       <li>1</li>
@@ -89,7 +89,8 @@ export default {
           page: 0,
           list: []
         }
-      }
+      },
+      currentType: "pop"
     };
   },
   created() {
@@ -107,7 +108,6 @@ export default {
       // this.goods.pop.list = res.data.list;
       this.goods["pop"].list.push(...res.data.list);
       console.log(this.goods.pop.list);
-      
     });
     gethomedata("new", 1).then(res => {
       // console.log(res);
@@ -121,17 +121,22 @@ export default {
       this.goods["sell"].list.push(...res.data.list);
       console.log(this.goods.sell.list);
     });
+  },
+  methods: {
+    tabclick(index) {
+      // console.log(index);
+      switch (index) {
+        case 0:
+          this.currentType = "pop";
+          break;
+        case 1:
+          this.currentType = "new";
+          break;
+        case 2:
+          this.currentType = "sell";
+      }
+    }
   }
-  // methods: {
-  //   gethomedata(type,page) {
-  //     // const page = this.goods[type].page + 1;
-  //     gethomedata(type, page).then(res => {
-  //       // this.goods[type].list.push(...res.data.list);
-  //       this.goods[type].page += 1;
-  //       console.log(res);
-  //     });
-  //   }
-  // }
 };
 </script>
 
