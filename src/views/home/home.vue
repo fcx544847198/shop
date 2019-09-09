@@ -7,6 +7,7 @@
     <recommends-view :recommends="recommends"></recommends-view>
     <feature-view></feature-view>
     <tab-control class="tabcontrol" :titles="['流行','新款','精选']"></tab-control>
+    <goodslist :goods="goods['pop'].list"></goodslist>
 
     <ul>
       <li>1</li>
@@ -56,10 +57,10 @@ import homeswiper from "./childcomps/homeswiper";
 import RecommendsView from "./childcomps/RecommendsView";
 import FeatureView from "./childcomps/FeatureView";
 import TabControl from "../../components/content/tabcontrol/tabcontrol";
+import goodslist from "../../components/content/goods/goodslist";
 
 import { gethomemultidata } from "../../network/home";
 import { gethomedata } from "../../network/home";
-// import { log } from 'util';
 
 export default {
   name: "home",
@@ -68,7 +69,8 @@ export default {
     homeswiper,
     RecommendsView,
     FeatureView,
-    TabControl
+    TabControl,
+    goodslist
   },
   data() {
     return {
@@ -79,7 +81,7 @@ export default {
           page: 0,
           list: []
         },
-        news: {
+        new: {
           page: 0,
           list: []
         },
@@ -100,17 +102,26 @@ export default {
 
     // gethomedata("pop");
 
-    gethomedata("pop",1).then(res =>{
-      console.log(res);
+    gethomedata("pop", 1).then(res => {
+      // console.log(res);
+      // this.goods.pop.list = res.data.list;
+      this.goods["pop"].list.push(...res.data.list);
+      console.log(this.goods.pop.list);
+      
     });
-    gethomedata('new',1).then(res =>{
-      console.log(res);
-    })
-    gethomedata('sell',1).then(res =>{
-      console.log(res);
-
-    })
-  },
+    gethomedata("new", 1).then(res => {
+      // console.log(res);
+      // this.goods.new.list = res.data.list;
+      this.goods["new"].list.push(...res.data.list);
+      console.log(this.goods.new.list);
+    });
+    gethomedata("sell", 1).then(res => {
+      // console.log(res);
+      // this.goods.sell.list = res.data.list;
+      this.goods["sell"].list.push(...res.data.list);
+      console.log(this.goods.sell.list);
+    });
+  }
   // methods: {
   //   gethomedata(type,page) {
   //     // const page = this.goods[type].page + 1;
@@ -135,11 +146,12 @@ export default {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 9;
+  z-index: 15;
 }
 .tabcontrol {
   position: sticky;
   top: 44px;
   background-color: white;
+  z-index: 9;
 }
 </style>
