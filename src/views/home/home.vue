@@ -3,50 +3,13 @@
     <nav-bar class="home-nav">
       <div slot="center">首页</div>
     </nav-bar>
-    <homeswiper :banners="banners" />
-    <recommends-view :recommends="recommends" />
-    <feature-view />
-    <tab-control class="tabcontrol" :titles="['流行','新款','精选']" @tabclick="tabclick" />
-    <goodslist :goods="goods[currentType].list" />
-
-    <ul>
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-      <li>4</li>
-      <li>5</li>
-      <li>6</li>
-      <li>7</li>
-      <li>8</li>
-      <li>9</li>
-      <li>10</li>
-      <li>11</li>
-      <li>12</li>
-      <li>13</li>
-      <li>14</li>
-      <li>15</li>
-      <li>16</li>
-      <li>17</li>
-      <li>18</li>
-      <li>19</li>
-      <li>20</li>
-      <li>20</li>
-      <li>20</li>
-      <li>20</li>
-      <li>20</li>
-      <li>20</li>
-      <li>20</li>
-      <li>20</li>
-      <li>20</li>
-      <li>20</li>
-      <li>20</li>
-      <li>20</li>
-      <li>20</li>
-      <li>20</li>
-      <li>20</li>
-      <li>20</li>
-      <li>20</li>
-    </ul>
+    <scroll class="content">
+      <homeswiper :banners="banners" />
+      <recommends-view :recommends="recommends" />
+      <feature-view />
+      <tab-control class="tabcontrol" :titles="['流行','新款','精选']" @tabclick="tabclick" />
+      <goodslist :goods="goods[currentType].list" />
+    </scroll>
   </div>
 </template>
 
@@ -58,6 +21,7 @@ import RecommendsView from "./childcomps/RecommendsView";
 import FeatureView from "./childcomps/FeatureView";
 import TabControl from "../../components/content/tabcontrol/tabcontrol";
 import goodslist from "../../components/content/goods/goodslist";
+import scroll from "../../components/common/scroll/scroll";
 
 import { gethomemultidata } from "../../network/home";
 import { gethomedata } from "../../network/home";
@@ -70,7 +34,8 @@ export default {
     RecommendsView,
     FeatureView,
     TabControl,
-    goodslist
+    goodslist,
+    scroll
   },
   data() {
     return {
@@ -106,19 +71,19 @@ export default {
         // console.log(res);
         // this.goods.pop.list = res.data.list;
         this.goods["pop"].list.push(...res.data.list);
-        console.log(this.goods.pop.list);
+        // console.log(this.goods.pop.list);
       }),
       gethomedata("new", 1).then(res => {
         // console.log(res);
         // this.goods.new.list = res.data.list;
         this.goods["new"].list.push(...res.data.list);
-        console.log(this.goods.new.list);
+        // console.log(this.goods.new.list);
       }),
       gethomedata("sell", 1).then(res => {
         // console.log(res);
         // this.goods.sell.list = res.data.list;
         this.goods["sell"].list.push(...res.data.list);
-        console.log(this.goods.sell.list);
+        // console.log(this.goods.sell.list);
       });
   },
   methods: {
@@ -139,7 +104,7 @@ export default {
 };
 </script>
 
-<style scope>
+<style scoped>
 #home {
   padding-top: 44px;
 }
@@ -157,5 +122,8 @@ export default {
   top: 44px;
   background-color: white;
   z-index: 9;
+}
+.content{
+  height: 300px;
 }
 </style>

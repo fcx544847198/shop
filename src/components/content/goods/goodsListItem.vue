@@ -23,7 +23,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
   .goods-item {
     padding-bottom: 40px;
     position: relative;

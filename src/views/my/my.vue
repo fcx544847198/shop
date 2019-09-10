@@ -134,7 +134,7 @@ export default {
 };
 </script>
 
-<style scope>
+<style>
 .my-nav {
   background-color: var(--color-tint);
   color: white;
