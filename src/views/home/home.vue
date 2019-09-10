@@ -7,7 +7,7 @@
     <recommends-view :recommends="recommends" />
     <feature-view />
     <tab-control class="tabcontrol" :titles="['流行','新款','精选']" @tabclick="tabclick" />
-    <goodslist :goods="goods[currentType].list"/>
+    <goodslist :goods="goods[currentType].list" />
 
     <ul>
       <li>1</li>
@@ -99,28 +99,27 @@ export default {
       // console.log(res);
       this.banners = res.data.banner.list;
       this.recommends = res.data.recommend.list;
-    });
+    }),
+      // gethomedata("pop");
 
-    // gethomedata("pop");
-
-    gethomedata("pop", 1).then(res => {
-      // console.log(res);
-      // this.goods.pop.list = res.data.list;
-      this.goods["pop"].list.push(...res.data.list);
-      console.log(this.goods.pop.list);
-    });
-    gethomedata("new", 1).then(res => {
-      // console.log(res);
-      // this.goods.new.list = res.data.list;
-      this.goods["new"].list.push(...res.data.list);
-      console.log(this.goods.new.list);
-    });
-    gethomedata("sell", 1).then(res => {
-      // console.log(res);
-      // this.goods.sell.list = res.data.list;
-      this.goods["sell"].list.push(...res.data.list);
-      console.log(this.goods.sell.list);
-    });
+      gethomedata("pop", 1).then(res => {
+        // console.log(res);
+        // this.goods.pop.list = res.data.list;
+        this.goods["pop"].list.push(...res.data.list);
+        console.log(this.goods.pop.list);
+      }),
+      gethomedata("new", 1).then(res => {
+        // console.log(res);
+        // this.goods.new.list = res.data.list;
+        this.goods["new"].list.push(...res.data.list);
+        console.log(this.goods.new.list);
+      }),
+      gethomedata("sell", 1).then(res => {
+        // console.log(res);
+        // this.goods.sell.list = res.data.list;
+        this.goods["sell"].list.push(...res.data.list);
+        console.log(this.goods.sell.list);
+      });
   },
   methods: {
     tabclick(index) {
