@@ -1,11 +1,13 @@
 <template>
   <div class="goods-item">
+    <a :href="goodsItem.clientUrl">
     <img :src="goodsItem.show.img" />
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
       <span class="price">{{goodsItem.price}}</span>
       <span class="collect">{{goodsItem.cfav}}</span>
     </div>
+    </a>
   </div>
 </template>
 

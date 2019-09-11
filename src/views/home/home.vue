@@ -115,8 +115,8 @@ export default {
       this.isShowBackTop = -position.y > 1000
     },
     loadmore(){
-      // console.log('上拉加载更多');
-      this.gethomedata(this.currentType)
+      console.log('上拉加载更多');
+      // this.gethomedata(this.currentType)
     }
   }
 };
