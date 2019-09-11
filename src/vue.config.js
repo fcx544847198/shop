@@ -1,4 +1,5 @@
 module.exports = {
+  assetsDir: '.',
   configwebpack:{
     resolve:{
       alias:{
