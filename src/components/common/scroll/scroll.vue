@@ -48,6 +48,9 @@ export default {
   methods: {
     scrollTo(x, y, time) {
       this.Scroll.scrollTo(x, y, time);
+    },
+    refresh(){
+      this.Scroll && this.Scroll.refresh()
     }
   }
 };

@@ -7,7 +7,7 @@
     @pullingup="loadmore">
       <homeswiper :banners="banners" />
       <recommends-view :recommends="recommends" />
-      <feature-view />
+      <feature-view/>
       <tab-control class="tabcontrol" :titles="['流行','新款','精选']" @tabclick="tabclick" />
       <goodslist :goods="goods[currentType].list" />
     </scroll>
@@ -60,7 +60,8 @@ export default {
         }
       },
       currentType: "pop",
-      isShowBackTop:false
+      isShowBackTop:false,
+      SaveY:0
     };
   },
   created() {
@@ -90,6 +91,13 @@ export default {
         this.goods["sell"].list.push(...res.data.list);
         // console.log(this.goods.sell.list);
       });
+  },
+  activated() {
+    this.$refs.scroll.scrollTo(0,this.SaveY,0)
+    this.$refs.scroll.refresh()
+  },
+  deactivated() {
+    this.SaveY = this.$refs.scroll.Scroll.y
   },
   methods: {
     tabclick(index) {
