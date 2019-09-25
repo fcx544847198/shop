@@ -16,10 +16,6 @@ export default {
       type: Number,
       default: 0
     },
-    pullUpLoad: {
-      type: Boolean,
-      default: false
-    }
   },
   data() {
     return {
@@ -31,8 +27,7 @@ export default {
       // probeType: 3,
       // pullUpLoad: true
       click: true,
-      probeType: this.probeType,
-      pullUpLoad: this.pullUpLoad
+      probeType: this.probeType
     });
 
     this.Scroll.on("scroll", position => {
@@ -40,10 +35,7 @@ export default {
       this.$emit("scroll", position);
     });
 
-    this.Scroll.on("pullingUp", () => {
-      // console.log("上拉加载更多");
-      this.$emit('pullingup')
-    });
+    this.Scroll.refresh()
   },
   methods: {
     scrollTo(x, y, time) {
@@ -51,6 +43,9 @@ export default {
     },
     refresh(){
       this.Scroll && this.Scroll.refresh()
+    },
+    finishPullUp(){
+      this.Scroll.finishPullUp();
     }
   }
 };
