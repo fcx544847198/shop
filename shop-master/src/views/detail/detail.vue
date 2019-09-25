@@ -7,6 +7,7 @@
       <detailshopinfo :shop="shop" />
       <detailgoodinfo :detail-info="detailInfo" @imageLoad="load" />
       <detailparaminfo :param-info="paramInfo" />
+      <detailcommentinfo :commentInfo="commentInfo"/>
     </scroll>
   </div>
 </template>
@@ -18,7 +19,10 @@ import detailswiper from "./childcomps/detailswiper";
 import detailshopinfo from "./childcomps/DetailShopInfo";
 import detailgoodinfo from "./childcomps/DetailGoodsInfo";
 import detailparaminfo from "./childcomps/DetailParamInfo";
+import detailcommentinfo from './childcomps/DetailcommentInfo'
+
 import Scroll from "../../components/common/scroll/scroll";
+
 import {
   getdataildata,
   GoodsInfo,
@@ -35,6 +39,7 @@ export default {
     detailshopinfo,
     detailgoodinfo,
     detailparaminfo,
+    detailcommentinfo,
     Scroll
   },
   data() {
@@ -44,7 +49,8 @@ export default {
       GoodsInfo: {},
       shop: {},
       detailInfo: {},
-      paramInfo: {}
+      paramInfo: {},
+      commentInfo:{}
     };
   },
   created() {
@@ -71,6 +77,10 @@ export default {
         data.itemParams.info,
         data.itemParams.rule
       );
+      //6.取出商品评价信息
+      if (data.rate.cRate !== 0) {
+        this.commentInfo = data.rate.list[0]
+      }
     });
   },
   methods: {
