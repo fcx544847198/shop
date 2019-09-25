@@ -81,7 +81,6 @@ export default {
 
     //3.监听item中图片加载完成
     this.$bus.$on("itemimgload", () => {
-      console.log('111');
       this.$refs.scroll.refresh()
     });
   },
