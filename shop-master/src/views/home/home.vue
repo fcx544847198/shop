@@ -11,7 +11,7 @@
       :pull-up-load="true"
       @pullingUp="loadmore"
     >
-      <homeswiper :banners="banners" />
+      <homeswiper :banners="banners" @swiperimageload="swiperimageload"/>
       <recommends-view :recommends="recommends" />
       <feature-view />
       <tab-control :titles="['流行','新款','精选']" @tabclick="tabclick" ref="tabcontrol"/>
@@ -70,7 +70,8 @@ export default {
       currentType: "pop",
       isShowBackTop: false,
       SaveY: 0,
-      taboffsetTop: 0
+      taboffsetTop: 0,
+      istabfixed:false
     };
   },
   created() {
@@ -87,10 +88,7 @@ export default {
     //3.监听item中图片加载完成
     this.$bus.$on("itemimgload", () => {
       refresh();
-    });
-
-    console.log(this.$refs.tabcontrol.$el.offsetTop);
-    
+    });    
   },
   activated() {
     this.$refs.scroll.scrollTo(0, this.SaveY, 0);
@@ -137,10 +135,18 @@ export default {
     },
     contentscroll(position) {
       // console.log(position);
-      this.isShowBackTop = -position.y > 1000;
+      //1.决定BackTop是否显示
+      this.isShowBackTop = (-position.y) > 1000;
+
+      //2.决定tabcontrol是否吸顶(position:fixed)
+      this.istabfixed = (-position.y) > this.taboffsetTop
     },
     loadmore() {
       this.gethomedata(this.currentType);
+    },
+    swiperimageload() {
+      this.taboffsetTop = this.$refs.tabcontrol.$el.offsetTop
+
     }
   }
 };
