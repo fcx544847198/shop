@@ -16,6 +16,10 @@ export default {
       type: Number,
       default: 0
     },
+    pullUpLoad: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
@@ -23,29 +27,38 @@ export default {
     };
   },
   mounted() {
+    //1.创建Better-scroll对象
     this.Scroll = new BS(".wrapper", {
       // probeType: 3,
-      // pullUpLoad: true
+      pullUpLoad: this.pullUpLoad,
       click: true,
       probeType: this.probeType
     });
-
-    this.Scroll.on("scroll", position => {
-      // console.log(position);
-      this.$emit("scroll", position);
-    });
-
-    this.Scroll.refresh()
+    //2.监听滚动位置
+    if (this.probeType === 2 || this.probeType === 3) {
+      this.Scroll.on("scroll", position => {
+        // console.log(position);
+        this.$emit("scroll", position);
+      });
+    }
+    //3.监听scroll滚到底部
+    if (this.pullUpLoad) {
+      this.Scroll.on("pullingUp", () => {
+        this.$emit('pullingUp')
+      });
+    }
   },
   methods: {
     scrollTo(x, y, time) {
-      this.Scroll.scrollTo(x, y, time);
+      this.Scroll && this.Scroll.scrollTo(x, y, time);
     },
-    refresh(){
-      this.Scroll && this.Scroll.refresh()
+    refresh() {
+      // console.log("111");
+
+      this.Scroll && this.Scroll.refresh();
     },
-    finishPullUp(){
-      this.Scroll.finishPullUp();
+    finishPullUp() {
+      this.Scroll && this.Scroll.finishPullUp();
     }
   }
 };

@@ -9,6 +9,7 @@
       :probeType="3"
       @scroll="contentscroll"
       :pull-up-load="true"
+      @pullingUp="loadmore"
     >
       <homeswiper :banners="banners" />
       <recommends-view :recommends="recommends" />
@@ -31,6 +32,7 @@ import goodslist from "../../components/content/goods/goodslist";
 import scroll from "../../components/common/scroll/scroll";
 import backtop from "../../components/content/backtop/backtop";
 
+import { debounce } from "../../common/until";
 import { gethomemultidata } from "../../network/home";
 import { gethomedata } from "../../network/home";
 
@@ -78,10 +80,12 @@ export default {
     this.gethomedata("pop");
     this.gethomedata("new");
     this.gethomedata("sell");
-
+  },
+  mounted() {
+    const refresh = debounce(this.$refs.scroll.refresh,50)
     //3.监听item中图片加载完成
     this.$bus.$on("itemimgload", () => {
-      this.$refs.scroll.refresh()
+      refresh()
     });
   },
   activated() {
@@ -104,6 +108,9 @@ export default {
       gethomedata(type, page).then(res => {
         this.goods[type].list.push(...res.data.list);
         this.goods[type].page += 1;
+
+        //完成上拉加载更多
+        this.$refs.scroll.finishPullUp();
       });
     },
     tabclick(index) {
@@ -127,6 +134,9 @@ export default {
     contentscroll(position) {
       // console.log(position);
       this.isShowBackTop = -position.y > 1000;
+    },
+    loadmore() {
+      this.gethomedata(this.currentType)
     }
   }
 };
