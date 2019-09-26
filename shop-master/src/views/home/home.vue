@@ -14,7 +14,7 @@
       <homeswiper :banners="banners" />
       <recommends-view :recommends="recommends" />
       <feature-view />
-      <tab-control class="tabcontrol" :titles="['流行','新款','精选']" @tabclick="tabclick" />
+      <tab-control :titles="['流行','新款','精选']" @tabclick="tabclick" ref="tabcontrol"/>
       <goodslist :goods="goods[currentType].list" />
     </scroll>
     <backtop @click.native="backClick()" v-show="isShowBackTop" />
@@ -69,7 +69,8 @@ export default {
       },
       currentType: "pop",
       isShowBackTop: false,
-      SaveY: 0
+      SaveY: 0,
+      taboffsetTop: 0
     };
   },
   created() {
@@ -82,11 +83,14 @@ export default {
     this.gethomedata("sell");
   },
   mounted() {
-    const refresh = debounce(this.$refs.scroll.refresh,50)
+    const refresh = debounce(this.$refs.scroll.refresh, 50);
     //3.监听item中图片加载完成
     this.$bus.$on("itemimgload", () => {
-      refresh()
+      refresh();
     });
+
+    console.log(this.$refs.tabcontrol.$el.offsetTop);
+    
   },
   activated() {
     this.$refs.scroll.scrollTo(0, this.SaveY, 0);
@@ -136,7 +140,7 @@ export default {
       this.isShowBackTop = -position.y > 1000;
     },
     loadmore() {
-      this.gethomedata(this.currentType)
+      this.gethomedata(this.currentType);
     }
   }
 };
