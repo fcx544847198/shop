@@ -157,12 +157,6 @@ export default {
   right: 0;
   z-index: 15;
 }
-.tabcontrol {
-  position: sticky;
-  top: 44px;
-  background-color: white;
-  z-index: 9;
-}
 .content {
   /* height: 300px; */
   overflow: hidden;
