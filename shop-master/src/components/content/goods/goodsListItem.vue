@@ -20,6 +20,11 @@ export default {
       }
     }
   },
+  computed: {
+    showimages() {
+      return this.goodsItem.image || this.goodsItem.show.img
+    }
+  },
   methods: {
     goodsItemClick(){
       this.$router.push('/detail/' + this.goodsItem.iid)

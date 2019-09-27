@@ -27,7 +27,8 @@ import {
   getdataildata,
   GoodsInfo,
   shop,
-  GoodsParam
+  GoodsParam,
+  getrecommend
 } from "../../network/detail";
 
 export default {
@@ -50,7 +51,8 @@ export default {
       shop: {},
       detailInfo: {},
       paramInfo: {},
-      commentInfo:{}
+      commentInfo:{},
+      recommends:[]
     };
   },
   created() {
@@ -82,6 +84,12 @@ export default {
         this.commentInfo = data.rate.list[0]
       }
     });
+    // 3.请求推荐数据
+    getrecommend().then(res => {
+      this.recommend = res.data.list
+      console.log(res);
+      
+    })
   },
   methods: {
     load() {
