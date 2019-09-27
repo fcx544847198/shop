@@ -3,6 +3,13 @@
     <nav-bar class="home-nav">
       <div slot="center">首页</div>
     </nav-bar>
+    <tab-control
+      :titles="['流行','新款','精选']"
+      @tabclick="tabclick"
+      ref="tabcontrol1"
+      class="tabcontrol"
+      v-show="istabfixed"
+    />
     <scroll
       class="content"
       ref="scroll"
@@ -11,10 +18,10 @@
       :pull-up-load="true"
       @pullingUp="loadmore"
     >
-      <homeswiper :banners="banners" @swiperimageload="swiperimageload"/>
+      <homeswiper :banners="banners" @swiperimageload="swiperimageload" />
       <recommends-view :recommends="recommends" />
       <feature-view />
-      <tab-control :titles="['流行','新款','精选']" @tabclick="tabclick" ref="tabcontrol"/>
+      <tab-control :titles="['流行','新款','精选']" @tabclick="tabclick" ref="tabcontrol" />
       <goodslist :goods="goods[currentType].list" />
     </scroll>
     <backtop @click.native="backClick()" v-show="isShowBackTop" />
@@ -71,7 +78,7 @@ export default {
       isShowBackTop: false,
       SaveY: 0,
       taboffsetTop: 0,
-      istabfixed:false
+      istabfixed: false
     };
   },
   created() {
@@ -88,7 +95,7 @@ export default {
     //3.监听item中图片加载完成
     this.$bus.$on("itemimgload", () => {
       refresh();
-    });    
+    });
   },
   activated() {
     this.$refs.scroll.scrollTo(0, this.SaveY, 0);
@@ -127,6 +134,8 @@ export default {
         case 2:
           this.currentType = "sell";
       }
+      this.$refs.tabcontrol1.currentIndex = index;
+      this.$refs.tabcontrol.currentIndex = index;
     },
     backClick() {
       // console.log("111");
@@ -136,17 +145,16 @@ export default {
     contentscroll(position) {
       // console.log(position);
       //1.决定BackTop是否显示
-      this.isShowBackTop = (-position.y) > 1000;
+      this.isShowBackTop = -position.y > 1000;
 
       //2.决定tabcontrol是否吸顶(position:fixed)
-      this.istabfixed = (-position.y) > this.taboffsetTop
+      this.istabfixed = -position.y > this.taboffsetTop;
     },
     loadmore() {
       this.gethomedata(this.currentType);
     },
     swiperimageload() {
-      this.taboffsetTop = this.$refs.tabcontrol.$el.offsetTop
-
+      this.taboffsetTop = this.$refs.tabcontrol.$el.offsetTop;
     }
   }
 };
@@ -154,18 +162,18 @@ export default {
 
 <style scoped>
 #home {
-  padding-top: 44px;
+  /* padding-top: 44px; */
   height: 100vh;
   position: relative;
 }
 .home-nav {
   background-color: var(--color-tint);
   color: white;
-  position: fixed;
+  /* position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 15;
+  z-index: 15; */
 }
 .content {
   /* height: 300px; */
@@ -177,7 +185,17 @@ export default {
   left: 0;
   right: 0;
 }
-
+.tabcontrol{
+  position: relative;
+  z-index: 9;
+  background-color: white;
+}
+.fixed {
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 44px;
+}
 /* .content{
   overflow: hidden;
   height: calc(100% - 93px);
