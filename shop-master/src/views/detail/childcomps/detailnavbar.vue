@@ -33,12 +33,13 @@ export default {
   methods: {
     titleaClick(index) {
       this.currentIndex = index;
+      this.$emit('titleclick',index)
     },
     backClick(){
       //第一种返回方法
-      // this.$router.back()
+      this.$router.back()
       //第二种返回方法
-      this.$router.go(-1)
+      // this.$router.go(-1)
     }
   }
 };
